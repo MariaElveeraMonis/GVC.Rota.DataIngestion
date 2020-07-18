@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "GVC.Shifts.Repos/1.0.0": {
+        "dependencies": {
+          "LumenWorks.Framework.IO": "3.8.0"
+        },
+        "runtime": {
+          "GVC.Shifts.Repos.dll": {}
+        }
+      },
+      "LumenWorks.Framework.IO/3.8.0": {
+        "runtime": {
+          "lib/net20/LumenWorks.Framework.IO.dll": {
+            "assemblyVersion": "3.8.0.0",
+            "fileVersion": "3.8.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GVC.Shifts.Repos/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LumenWorks.Framework.IO/3.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Br2Q9j/tf2uF3Ci4CajidD18tui9DOg2iIzH5Xjro35ra6r8HGMD12B+ZlJ8v9AN3YXl7iPu5YDGbBlXVcZpHw==",
+      "path": "lumenworks.framework.io/3.8.0",
+      "hashPath": "lumenworks.framework.io.3.8.0.nupkg.sha512"
+    }
+  }
+}

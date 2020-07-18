@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GVC.Rota.DataIngestion.API</name>
+    </assembly>
+    <members>
+        <member name="T:GVC.Shifts.API.Controllers.ShiftsController">
+            <summary>
+            Shifts Controller
+            </summary>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.#ctor(GVC.Shifts.Repos.RepoInterface.IShiftRepo,Microsoft.Extensions.DependencyInjection.IServiceScopeFactory)">
+            <summary>
+            Shifts Controller
+            </summary>
+            <param name="shiftsRepo"></param>
+            <param name="serviceScopeFactory"></param>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateChannelRecord(System.String)">
+            <summary>
+            Create Channel Record in Channels Table  from CSV file.
+            the CSV file should contain the following:
+            DisplayName, Description, TeamId
+            </summary>
+            <param name="channel_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateGroupRecord(System.String)">
+            <summary>
+            Create Group Record in Groups Table from CSV file. 
+            the CSV file should contain the following:
+            GroupDisplayName, GroupDescription, MainEnabled, MailNickName
+            </summary>
+            <param name="Group_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateSchedulerRecord(System.String)">
+            <summary>
+            Create Scheduler Record in Scheduler Table from CSV file.
+             the CSV file should contain the following:
+            TeamId, ShopName, IsActive
+            </summary>
+            <param name="SchedulerFilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateShiftsecord(System.String)">
+            <summary>
+            Create Shifts Record in Shifts Table from CSV file
+             the CSV file should contain the following:
+             PersonnelId,ShopId,AreaId,
+             SharedShiftName,SharedShiftNote,SharedShiftStartDateTime,SharedShiftEndDateTime,SharedShifttheme,
+             DraftShiftName,DraftShiftNote,DraftShiftStartDateTime,DraftShiftEndDateTime,DraftShifttheme
+             </summary>
+            <param name="Shifts_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateUsersRecord(System.String)">
+            <summary>
+            Create Users Record in Users Table from CSV file
+            the CSV file should contain the following:
+            Id,GivenName,SurName,UserPrincipalName,Email
+            </summary>
+            <param name="Users_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateContractRecord(System.String)">
+            <summary>
+            Create Contract Record in Contract Table from CSV file
+            the CSV file should contain the following:
+            UserId,WorkingHours
+            </summary>
+            <param name="Contract_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GVC.Shifts.API.Controllers.ShiftsController.CreateLeavesRecord(System.String)">
+            <summary>
+            Create Leaves Record in Leaves Table from CSV file
+            the CSV file should contain the following:
+            LeaveType,FromDate,ToDate,NoOfHours,NoOfDays
+            </summary>
+            <param name="Leaves_FilePath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GVC.Shifts.API.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GVC.Shifts.API.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:GVC.Shifts.API.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GVC.Shifts.API.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:GVC.Shifts.API.Startup._xmlPathForSwagger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GVC.Shifts.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:GVC.Shifts.API.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:GVC.Shifts.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:GVC.Shifts.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>

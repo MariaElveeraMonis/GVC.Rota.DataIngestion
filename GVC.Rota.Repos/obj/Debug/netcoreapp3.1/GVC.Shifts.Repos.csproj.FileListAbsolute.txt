@@ -1,0 +1,5 @@
+C:\Users\maria.em\Documents\GitHub\GVC\API\GVC.Shifts.Repos\bin\Debug\netcoreapp3.1\GVC.Shifts.Repos.deps.json
+C:\Users\maria.em\Documents\GitHub\GVC\API\GVC.Shifts.Repos\bin\Debug\netcoreapp3.1\GVC.Shifts.Repos.dll
+C:\Users\maria.em\Documents\GitHub\GVC\API\GVC.Shifts.Repos\obj\Debug\netcoreapp3.1\GVC.Shifts.Repos.csprojAssemblyReference.cache
+C:\Users\maria.em\Documents\GitHub\GVC\API\GVC.Shifts.Repos\obj\Debug\netcoreapp3.1\GVC.Shifts.Repos.AssemblyInfoInputs.cache
+C:\Users\maria.em\Documents\GitHub\GVC\API\GVC.Shifts.Repos\obj\Debug\netcoreapp3.1\GVC.Shifts.Repos.AssemblyInfo.cs

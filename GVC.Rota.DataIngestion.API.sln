@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{355CFE46-45F2-402F-BBC9-D8FD935A97CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GVC.Rota.DataIngestion.API", "GVC.Rota.API\GVC.Rota.DataIngestion.API.csproj", "{69FABB77-3552-47A2-851D-D86099FF85FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GVC.Rota.Models", "GVC.Rota.Models\GVC.Rota.Models.csproj", "{B93C7AA4-04FB-4493-B310-56122D5558A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GVC.Rota.Repos", "GVC.Rota.Repos\GVC.Rota.Repos.csproj", "{6FF159ED-5C93-4B16-B9BD-1C8584353BB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69FABB77-3552-47A2-851D-D86099FF85FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69FABB77-3552-47A2-851D-D86099FF85FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69FABB77-3552-47A2-851D-D86099FF85FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69FABB77-3552-47A2-851D-D86099FF85FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B93C7AA4-04FB-4493-B310-56122D5558A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B93C7AA4-04FB-4493-B310-56122D5558A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B93C7AA4-04FB-4493-B310-56122D5558A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B93C7AA4-04FB-4493-B310-56122D5558A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FF159ED-5C93-4B16-B9BD-1C8584353BB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF159ED-5C93-4B16-B9BD-1C8584353BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF159ED-5C93-4B16-B9BD-1C8584353BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF159ED-5C93-4B16-B9BD-1C8584353BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{69FABB77-3552-47A2-851D-D86099FF85FB} = {355CFE46-45F2-402F-BBC9-D8FD935A97CA}
+		{B93C7AA4-04FB-4493-B310-56122D5558A5} = {355CFE46-45F2-402F-BBC9-D8FD935A97CA}
+		{6FF159ED-5C93-4B16-B9BD-1C8584353BB5} = {355CFE46-45F2-402F-BBC9-D8FD935A97CA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F5B4A283-8FD1-4E78-8494-19B81C039166}
+	EndGlobalSection
+EndGlobal
