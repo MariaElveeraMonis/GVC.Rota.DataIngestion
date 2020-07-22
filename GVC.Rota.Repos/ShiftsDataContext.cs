@@ -23,6 +23,7 @@ namespace GVC.Shifts.Repos
         public DbSet<Users> Users { get; set; }
         public DbSet<Contracts> Contracts { get; set; }
         public DbSet<Leaves> Leaves { get; set; }
-        
+        public DbSet<Activity> Activity { get; set; }
+
     }
 }

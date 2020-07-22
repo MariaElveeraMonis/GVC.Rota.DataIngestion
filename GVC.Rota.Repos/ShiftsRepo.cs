@@ -179,28 +179,31 @@ namespace GVC.Shifts.Repos
                     {
                         ShiftsId = 0,
                         PersonnelId = dataTable.Rows[i][j].ToString(),
-                        ShopId = dataTable.Rows[i][j+1].ToString(),
-                        AreaId = dataTable.Rows[i][j+2].ToString(),
-                        SharedShift = new SharedShift()
-                        {
-                            SharedShiftId = 0,
-                            SharedShiftName = dataTable.Rows[i][j+3].ToString(),
-                            SharedShiftNote = dataTable.Rows[i][j+4].ToString(),
-                            StartDateTime = DateTime.Parse(dataTable.Rows[i][j+5].ToString()),
-                            EndDateTime = DateTime.Parse(dataTable.Rows[i][j+6].ToString()),
-                            Theme = int.Parse(dataTable.Rows[i][j + 7].ToString())
-
-                        },
-                        DraftShift = new DraftShift()
-                        {
-                            DraftShiftId = 0,
-                            DraftShiftName = dataTable.Rows[i][j + 8].ToString(),
-                            DraftShiftNote = dataTable.Rows[i][j + 9].ToString(),
-                            StartDateTime = DateTime.Parse(dataTable.Rows[i][j + 10].ToString()),
-                            EndDateTime = DateTime.Parse(dataTable.Rows[i][j + 11].ToString()),
-                            Theme = int.Parse(dataTable.Rows[i][j + 12].ToString())
+                        ShiftName = dataTable.Rows[i][j+1].ToString(),
+                        ShiftNote = dataTable.Rows[i][j+2].ToString(),
+                        ShiftStartDate = DateTime.Parse(dataTable.Rows[i][j + 3].ToString()),
+                        ShiftEndDate = DateTime.Parse(dataTable.Rows[i][j + 4].ToString()),
+                        Shift = new List<Activity>(){ new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+5].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+6].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+7].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+8].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+9].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+10].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+11].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+12].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+13].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+14].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+15].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+16].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+17].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+18].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+19].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+20].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+21].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+22].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+23].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+24].ToString())},
                         }
-
                     });
                 }
 
@@ -209,10 +212,14 @@ namespace GVC.Shifts.Repos
                     var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
                     foreach (var shift in shiftParameters)
                     {
-                        shift.SharedshiftId = await InsertIntoSharedShift(shift.SharedShift, serviceScopeFactory);
-                        shift.DraftshiftId = await InsertIntoDraftShift(shift.DraftShift, serviceScopeFactory);
                         await dbContext.AddAsync(shift);
                         await dbContext.SaveChangesAsync();
+                        foreach (var act in shift.Shift)
+                        {
+                            act.ShiftId = shift.ShiftsId;
+                            await InsertIntoSharedShift(act, serviceScopeFactory);
+                        }
+                        
                         rowCount++;
                     }
                 }
@@ -223,17 +230,17 @@ namespace GVC.Shifts.Repos
                 throw ex;
             }
         }
-        public async Task<int> InsertIntoSharedShift(SharedShift SharedShift, IServiceScopeFactory serviceScopeFactory)
+        public async Task<int> InsertIntoSharedShift(Activity activity, IServiceScopeFactory serviceScopeFactory)
         {
             try
             {
                 using (var scope = serviceScopeFactory.CreateScope())
                 {
                     var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
-                    SharedShift.SharedShiftId = 0;
-                    await dbContext.AddAsync(SharedShift);
+                    activity.ActivityId = 0;
+                    await dbContext.AddAsync(activity);
                     await dbContext.SaveChangesAsync();
-                    return SharedShift.SharedShiftId;
+                    return activity.ActivityId;
                 }
             }
             catch(Exception ex)
@@ -242,26 +249,6 @@ namespace GVC.Shifts.Repos
             }
             
             
-        }
-        public async Task<int> InsertIntoDraftShift(DraftShift draftShift, IServiceScopeFactory serviceScopeFactory)
-        {
-            try
-            {
-                using (var scope = serviceScopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
-                    draftShift.DraftShiftId = 0;
-                    await dbContext.AddAsync(draftShift);
-                    await dbContext.SaveChangesAsync();
-                    return draftShift.DraftShiftId;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
         }
         public async Task<int> InsertIntoUser(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
         {

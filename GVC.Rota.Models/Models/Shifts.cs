@@ -16,14 +16,29 @@ namespace GVC.Rota.Models
             get; set;
         }
         public string PersonnelId { get; set; }
-        public string ShopId { get; set; }
-        public string AreaId { get; set; }
-        public int SharedshiftId { get; set; }
-        public int DraftshiftId { get; set; }
+        public string ShiftName { get; set; }
+        public string ShiftNote { get; set; }
+        public DateTime ShiftStartDate { get; set; }
+        public DateTime ShiftEndDate { get; set; }
         [NotMapped]
-        public SharedShift SharedShift { get; set; }
-        [NotMapped]
-        public DraftShift DraftShift { get; set; }
+        public List<Activity> Shift { get; set; }
+
+    }
+    public class Activity
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ActivityId
+        {
+            get; set;
+        }
+        public bool isPaid { get; set; }
+        public DateTime startDateTime { get; set; }
+        public DateTime endDateTime { get; set; }
+        public string code { get; set; }
+        public string activityName { get; set; }
+        public int theme { get; set; }
+        public int ShiftId { get; set; }
 
     }
 
