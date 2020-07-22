@@ -15,3 +15,4 @@ D:\GVC.Rota\DataIngestion\API\GVC.Rota.Models\obj\Debug\netcoreapp2.2\GVC.Rota.M
 D:\GVC.Rota\DataIngestion\API\GVC.Rota.Models\obj\Debug\netcoreapp2.2\GVC.Rota.Models.csproj.CoreCompileInputs.cache
 D:\GVC.Rota\DataIngestion\API\GVC.Rota.Models\obj\Debug\netcoreapp2.2\GVC.Rota.Models.dll
 D:\GVC.Rota\DataIngestion\API\GVC.Rota.Models\obj\Debug\netcoreapp2.2\GVC.Rota.Models.pdb
+D:\GVC.Rota\DataIngestion\API\GVC.Rota.Models\obj\Debug\netcoreapp2.2\GVC.Rota.Models.csprojAssemblyReference.cache
