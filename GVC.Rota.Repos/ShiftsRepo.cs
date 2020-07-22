@@ -72,7 +72,7 @@ namespace GVC.Shifts.Repos
                         GroupDisplayName = dataTable.Rows[i][j].ToString(),
                         GroupDescription = dataTable.Rows[i][j + 1].ToString(),
                         MailEnabled = Boolean.Parse(dataTable.Rows[i][j + 2].ToString()),
-                        MailNickname = dataTable.Rows[i][j + 3].ToString(),
+                        MailNickName = dataTable.Rows[i][j + 3].ToString(),
                         IsPublished = Boolean.Parse(dataTable.Rows[i][j+4].ToString()),
                         IsShiftLinked = Boolean.Parse(dataTable.Rows[i][j+5].ToString())
                     });
@@ -85,7 +85,7 @@ namespace GVC.Shifts.Repos
                     foreach (var location in locationParameters)
                     {
                         count++;
-                        var availableLocationRecord = await dbContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.MailNickname == location.MailNickname);
+                        var availableLocationRecord = await dbContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.MailNickName == location.MailNickName);
                         if (availableLocationRecord == null)
                         { 
                             location.LocationId = 0;
@@ -95,7 +95,7 @@ namespace GVC.Shifts.Repos
                         }
                         else 
                         {
-                            if (availableLocationRecord.MailNickname != location.MailNickname)
+                            if (availableLocationRecord.MailNickName != location.MailNickName)
                             {
                                 await dbContext.AddAsync(location);
                                 await dbContext.SaveChangesAsync();
@@ -110,6 +110,61 @@ namespace GVC.Shifts.Repos
                         
                        
                         
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<Dictionary<int, string>>> InsertIntoScheduler(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
+        {
+            try
+            {
+                List<Dictionary<int, string>> result = new List<Dictionary<int, string>>();
+                var schedulerParameters = new List<Scheduler>();
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    int j = 0;
+                    schedulerParameters.Add(new Scheduler()
+                    {
+                        SchedulerId = 0,
+                        ShopName = dataTable.Rows[i][j + 0].ToString(),
+                        IsActive = Boolean.Parse(dataTable.Rows[i][j + 1].ToString()),
+                        IsPublished = Boolean.Parse(dataTable.Rows[i][j + 2].ToString()),
+                        MailNickName = dataTable.Rows[i][j + 3].ToString()
+
+                    });
+                }
+
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var count = 0;
+                    var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
+                    foreach (var scheduler in schedulerParameters)
+                    {
+                        count++;
+                        var availableLocation = await dbContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.MailNickName == scheduler.MailNickName);
+                        if(availableLocation != null)
+                        {
+                            if (availableLocation.MailNickName == scheduler.MailNickName)
+                            {
+                                await dbContext.AddAsync(scheduler);
+                                await dbContext.SaveChangesAsync();
+                                result.Add(new Dictionary<int, string> { { count, "successful" } });
+                            }
+                            else
+                            {
+                                result.Add(new Dictionary<int, string> { { count, "Failed, MailNickName not available in Location Table" } });
+                            }
+                        }
+                        else
+                        {
+                            result.Add(new Dictionary<int, string> { { count, "Failed, MailNickName not available in Location Table" } });
+                        }
                     }
                 }
                 return result;
@@ -156,48 +211,13 @@ namespace GVC.Shifts.Repos
             }
         }
 
-        public async Task<int> InsertIntoScheduler(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
+        
+
+        public async Task<List<Dictionary<int, string>>> InsertIntoShift(DataTable dataTable,string shiftType, IServiceScopeFactory serviceScopeFactory)
         {
             try
             {
-                int rowCount = 0;
-                var schedulerParameters = new List<Scheduler>();
-                for (int i = 0; i < dataTable.Rows.Count; i++)
-                {
-                    int j = 0;
-                    schedulerParameters.Add(new Scheduler()
-                    {
-                        SchedulerId = 0,
-                        TeamId = dataTable.Rows[i][j].ToString(),
-                        ShopName = dataTable.Rows[i][j+1].ToString(),
-                        IsActive = Boolean.Parse(dataTable.Rows[i][j+2].ToString())
-
-                    });
-                }
-
-                using (var scope = serviceScopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
-                    foreach (var scheduler in schedulerParameters)
-                    {
-                        await dbContext.AddAsync(scheduler);
-                        await dbContext.SaveChangesAsync();
-                        rowCount++;
-                    }
-                }
-                return rowCount;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task<int> InsertIntoShift(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
-        {
-            try
-            {
-                int rowCount = 0;
+                List<Dictionary<int, string>> result = new List<Dictionary<int, string>>();
                 var shiftParameters = new List<GVC.Rota.Models.Shifts>();
                 for (int i = 0; i < dataTable.Rows.Count; i++)
                 {
@@ -205,52 +225,59 @@ namespace GVC.Shifts.Repos
                     shiftParameters.Add(new GVC.Rota.Models.Shifts()
                     {
                         ShiftsId = 0,
+                        ShiftType = shiftType,
                         PersonnelId = dataTable.Rows[i][j].ToString(),
-                        ShiftName = dataTable.Rows[i][j+1].ToString(),
-                        ShiftNote = dataTable.Rows[i][j+2].ToString(),
-                        ShiftStartDate = DateTime.Parse(dataTable.Rows[i][j + 3].ToString()),
-                        ShiftEndDate = DateTime.Parse(dataTable.Rows[i][j + 4].ToString()),
-                        Shift = new List<Activity>(){ new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+5].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+6].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+7].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+8].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+9].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+10].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+11].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+12].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+13].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+14].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+15].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+16].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+17].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+18].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+19].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+20].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+21].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+22].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+23].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+24].ToString())},
+                        ShopId = dataTable.Rows[i][j+1].ToString(),
+                        ShiftName = dataTable.Rows[i][j+2].ToString(),
+                        ShiftNote = dataTable.Rows[i][j+3].ToString(),
+                        ShiftStartDate = DateTime.Parse(dataTable.Rows[i][j + 4].ToString()),
+                        ShiftEndDate = DateTime.Parse(dataTable.Rows[i][j + 5].ToString()),
+                        IsShared = Boolean.Parse(dataTable.Rows[i][j + 6].ToString()),
+                        IsPublished = Boolean.Parse(dataTable.Rows[i][j + 7].ToString()),
+                        Theme = int.Parse(dataTable.Rows[i][j + 8].ToString()),
+                        Shift = new List<Activity>(){ new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+9].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+10].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+11].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+12].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+13].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+14].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+15].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+16].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+17].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+18].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+19].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+20].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+21].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+22].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+23].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+24].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+25].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+26].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+27].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+28].ToString())},
                         }
                     });
                 }
 
                 using (var scope = serviceScopeFactory.CreateScope())
                 {
+                    int count = 0;
                     var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
                     foreach (var shift in shiftParameters)
                     {
+                        count++;
                         await dbContext.AddAsync(shift);
                         await dbContext.SaveChangesAsync();
+                        result.Add(new Dictionary<int, string> { { count, "successful" } });
                         foreach (var act in shift.Shift)
                         {
                             act.ShiftId = shift.ShiftsId;
                             await InsertIntoSharedShift(act, serviceScopeFactory);
                         }
                         
-                        rowCount++;
                     }
                 }
-                return rowCount;
+                return result;
             }
             catch (Exception ex)
             {

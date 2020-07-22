@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Policy;
 using System.Threading.Tasks;
 using GVC.Shifts.Repos.RepoInterface;
@@ -56,7 +57,7 @@ namespace GVC.Shifts.API.Controllers
         /// <summary>
         /// Create Location Record in Locations Table from CSV file. 
         /// the CSV file should contain the following:
-        /// LocatiosDisplayName, LocationDescription, MainEnabled, MailNickName,IsPublished,IsShiftLinked
+        /// LocationDisplayName, LocationDescription, MainEnabled, MailNickName,IsPublished,IsShiftLinked
         /// </summary>
         /// <param name="Location_FilePath"></param>
         /// <returns></returns>
@@ -79,7 +80,7 @@ namespace GVC.Shifts.API.Controllers
         /// <summary>
         /// Create Scheduler Record in Scheduler Table from CSV file.
         ///  the CSV file should contain the following:
-        /// TeamId, ShopName, IsActive
+        /// ShopName, IsActive, IsPublished, MailNickName
         /// </summary>
         /// <param name="SchedulerFilePath"></param>
         /// <returns></returns>
@@ -102,9 +103,12 @@ namespace GVC.Shifts.API.Controllers
         /// <summary>
         /// Create Shifts Record in Shifts Table from CSV file
         ///  the CSV file should contain the following:
-        ///  PersonnelId,ShopId,AreaId,
-        ///  SharedShiftName,SharedShiftNote,SharedShiftStartDateTime,SharedShiftEndDateTime,SharedShifttheme,
-        ///  DraftShiftName,DraftShiftNote,DraftShiftStartDateTime,DraftShiftEndDateTime,DraftShifttheme
+        ///PersonnelId,ShopId,
+        ///ShiftName,ShiftNote,ShiftStartDate,ShiftEndDate,IsShared,IsPublished,Theme,
+        ///Activity1IsPaid,Activity1StartDateTime,Activity1EndDateTime,Activity1Name,Activity1Theme,
+        ///Activity2IsPaid,Activity2StartDateTime,Activity2EndDateTime,Activity2Name,Activity2Theme,
+        ///Activity3IsPaid,Activity3StartDateTime,Activity3EndDateTime,Activity3Name,Activity3Theme,
+        ///Activity4IsPaid,Activity4StartDateTime,Activity4EndDateTime,Activity4Name,Activity4Theme
         ///  </summary>
         /// <param name="Shifts_FilePath"></param>
         /// <returns></returns>
@@ -113,8 +117,18 @@ namespace GVC.Shifts.API.Controllers
         {
             try
             {
+
+                var shiftType = "";
                 var csvResult = _shiftsRepo.GetDatatableFromCSV(Shifts_FilePath);
-                var count = _shiftsRepo.InsertIntoShift(csvResult, serviceScopeFactory);
+                if (Shifts_FilePath.Contains("OpenShift"))
+                {
+                    shiftType = "OpenShift";
+                }
+                else
+                {
+                    shiftType = "Shift";
+                }
+                var count = _shiftsRepo.InsertIntoShift(csvResult, shiftType, serviceScopeFactory);
                 return Ok(count.Result);
             }
             catch (Exception ex)

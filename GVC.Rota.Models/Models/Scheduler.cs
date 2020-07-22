@@ -13,8 +13,9 @@ namespace GVC.Rota.Models
         {
             get; set;
         }
-        public string TeamId { get; set; }
         public string ShopName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsPublished { get; set; }
+        public string MailNickName { get; set; }
     }
 }

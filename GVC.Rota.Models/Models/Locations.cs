@@ -17,7 +17,7 @@ namespace GVC.Rota.Models
         }
         public string GroupDescription { get; set; }
         public string GroupDisplayName { get; set; }
-        public string MailNickname { get; set; }
+        public string MailNickName { get; set; }
         public bool MailEnabled { get; set; }
         public bool IsPublished { get; set; }
         public bool IsShiftLinked { get; set; }
