@@ -10,8 +10,10 @@ namespace GVC.Shifts.Repos.RepoInterface
     public interface IShiftRepo
     {
         DataTable GetDatatableFromCSV(string channelUrl);
+        Task<List<Dictionary<int, string>>> InsertIntoLocation(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
+
         Task<int> InsertIntoChannel(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
-        Task<int> InsertIntoGroup(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
+        
         Task<int> InsertIntoScheduler(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
         Task<int> InsertIntoShift(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
         Task<int> InsertIntoUser(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);

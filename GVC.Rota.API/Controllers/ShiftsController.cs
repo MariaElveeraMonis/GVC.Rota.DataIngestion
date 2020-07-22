@@ -54,19 +54,19 @@ namespace GVC.Shifts.API.Controllers
         }
 
         /// <summary>
-        /// Create Group Record in Groups Table from CSV file. 
+        /// Create Location Record in Locations Table from CSV file. 
         /// the CSV file should contain the following:
-        /// GroupDisplayName, GroupDescription, MainEnabled, MailNickName
+        /// LocatiosDisplayName, LocationDescription, MainEnabled, MailNickName,IsPublished,IsShiftLinked
         /// </summary>
-        /// <param name="Group_FilePath"></param>
+        /// <param name="Location_FilePath"></param>
         /// <returns></returns>
-        [HttpPost("Group")]
-        public IActionResult CreateGroupRecord(string Group_FilePath)
+        [HttpPost("CreateLocation")]
+        public IActionResult CreateLocationRecord(string Location_FilePath)
         {
             try
             {
-                var result = _shiftsRepo.GetDatatableFromCSV(Group_FilePath);
-                var count = _shiftsRepo.InsertIntoGroup(result, serviceScopeFactory);
+                var result = _shiftsRepo.GetDatatableFromCSV(Location_FilePath);
+                var count = _shiftsRepo.InsertIntoLocation(result, serviceScopeFactory);
                 return Ok(count.Result);
             }
             catch (Exception ex)

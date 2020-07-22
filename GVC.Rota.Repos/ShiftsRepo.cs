@@ -2,6 +2,7 @@
 using GVC.Rota.Models.Models;
 using GVC.Shifts.Repos.RepoInterface;
 using LumenWorks.Framework.IO.Csv;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GVC.Shifts.Repos
@@ -55,6 +57,68 @@ namespace GVC.Shifts.Repos
 
 
         }
+        public async Task<List<Dictionary<int,string>>> InsertIntoLocation(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
+        {
+            try
+            {
+                List<Dictionary<int,string>> result = new List<Dictionary<int, string>>();
+                var locationParameters = new List<Locations>();
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    int j = 0;
+                    locationParameters.Add(new Locations()
+                    {
+                        LocationId = 0,
+                        GroupDisplayName = dataTable.Rows[i][j].ToString(),
+                        GroupDescription = dataTable.Rows[i][j + 1].ToString(),
+                        MailEnabled = Boolean.Parse(dataTable.Rows[i][j + 2].ToString()),
+                        MailNickname = dataTable.Rows[i][j + 3].ToString(),
+                        IsPublished = Boolean.Parse(dataTable.Rows[i][j+4].ToString()),
+                        IsShiftLinked = Boolean.Parse(dataTable.Rows[i][j+5].ToString())
+                    });
+                }
+
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    int count = 0;
+                    var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
+                    foreach (var location in locationParameters)
+                    {
+                        count++;
+                        var availableLocationRecord = await dbContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.MailNickname == location.MailNickname);
+                        if (availableLocationRecord == null)
+                        { 
+                            location.LocationId = 0;
+                            await dbContext.AddAsync(location);
+                            await dbContext.SaveChangesAsync();
+                            result.Add(new Dictionary<int, string> { { count, "successful" } });
+                        }
+                        else 
+                        {
+                            if (availableLocationRecord.MailNickname != location.MailNickname)
+                            {
+                                await dbContext.AddAsync(location);
+                                await dbContext.SaveChangesAsync();
+                                result.Add(new Dictionary<int, string> { { count, "successful" } });
+                            }
+                            else
+                            {
+                                result.Add(new Dictionary<int, string> { { count, "MailNickName already exists" } });
+                            }
+                            
+                        }
+                        
+                       
+                        
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public async Task<int> InsertIntoChannel(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
         {
@@ -80,43 +144,6 @@ namespace GVC.Shifts.Repos
                     foreach (var chan in channelParameters)
                     {
                         await dbContext.AddAsync(chan);
-                        await dbContext.SaveChangesAsync();
-                        rowCount++;
-                    }
-                }
-                return rowCount;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public async Task<int> InsertIntoGroup(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
-        {
-            try
-            {
-                int rowCount = 0;
-                var GroupParameters = new List<Groups>();
-                for (int i = 0; i < dataTable.Rows.Count; i++)
-                {
-                    int j = 0;
-                    GroupParameters.Add(new Groups()
-                    {
-                        GroupId = 0,
-                        GroupDisplayName = dataTable.Rows[i][j].ToString(),
-                        GroupDescription = dataTable.Rows[i][j+1].ToString(),
-                        MailEnabled = Boolean.Parse(dataTable.Rows[i][j+2].ToString()),
-                        MailNickname = dataTable.Rows[i][j+3].ToString(),
-
-                    });
-                }
-
-                using (var scope = serviceScopeFactory.CreateScope())
-                {
-                    var dbContext = scope.ServiceProvider.GetService<ShiftsDataContext>();
-                    foreach (var group in GroupParameters)
-                    {
-                        await dbContext.AddAsync(group);
                         await dbContext.SaveChangesAsync();
                         rowCount++;
                     }

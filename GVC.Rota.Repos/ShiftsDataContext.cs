@@ -14,7 +14,7 @@ namespace GVC.Shifts.Repos
         {
         }
         public DbSet<Channels> Channels { get; set; }
-        public DbSet<Groups> Groups { get; set; }
+        public DbSet<Locations> Locations { get; set; }
         public DbSet<Scheduler> Scheduler { get; set; }
 
         public DbSet<GVC.Rota.Models.Shifts> Shifts { get; set; }

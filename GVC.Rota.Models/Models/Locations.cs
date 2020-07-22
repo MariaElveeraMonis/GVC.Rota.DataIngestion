@@ -7,11 +7,11 @@ using System.Text;
 namespace GVC.Rota.Models
 {
     
-    public class Groups
+    public class Locations
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GroupId
+        public int LocationId
         {
             get; set;
         }
@@ -19,5 +19,7 @@ namespace GVC.Rota.Models
         public string GroupDisplayName { get; set; }
         public string MailNickname { get; set; }
         public bool MailEnabled { get; set; }
+        public bool IsPublished { get; set; }
+        public bool IsShiftLinked { get; set; }
     }
 }
