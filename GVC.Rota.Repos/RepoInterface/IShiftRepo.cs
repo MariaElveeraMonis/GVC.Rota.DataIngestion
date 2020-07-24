@@ -14,7 +14,7 @@ namespace GVC.Shifts.Repos.RepoInterface
         Task<List<Dictionary<int, string>>> InsertIntoScheduler(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
 
         Task<int> InsertIntoChannel(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
-        Task<List<Dictionary<int, string>>> InsertIntoShift(DataTable dataTable, string shiftType, IServiceScopeFactory serviceScopeFactory);
+        Task<List<Dictionary<int, string>>> InsertIntoShift(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
         Task<int> InsertIntoUser(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
         Task<int> InsertIntoContract(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);
         Task<int> InsertIntoLeave(DataTable dataTable, IServiceScopeFactory serviceScopeFactory);

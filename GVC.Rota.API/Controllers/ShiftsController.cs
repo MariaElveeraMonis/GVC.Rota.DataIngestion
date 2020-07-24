@@ -117,18 +117,9 @@ namespace GVC.Shifts.API.Controllers
         {
             try
             {
-
-                var shiftType = "";
                 var csvResult = _shiftsRepo.GetDatatableFromCSV(Shifts_FilePath);
-                if (Shifts_FilePath.Contains("OpenShift"))
-                {
-                    shiftType = "OpenShift";
-                }
-                else
-                {
-                    shiftType = "Shift";
-                }
-                var count = _shiftsRepo.InsertIntoShift(csvResult, shiftType, serviceScopeFactory);
+                
+                var count = _shiftsRepo.InsertIntoShift(csvResult, serviceScopeFactory);
                 return Ok(count.Result);
             }
             catch (Exception ex)

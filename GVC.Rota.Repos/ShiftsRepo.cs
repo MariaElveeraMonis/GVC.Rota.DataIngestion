@@ -213,7 +213,7 @@ namespace GVC.Shifts.Repos
 
         
 
-        public async Task<List<Dictionary<int, string>>> InsertIntoShift(DataTable dataTable,string shiftType, IServiceScopeFactory serviceScopeFactory)
+        public async Task<List<Dictionary<int, string>>> InsertIntoShift(DataTable dataTable, IServiceScopeFactory serviceScopeFactory)
         {
             try
             {
@@ -225,7 +225,6 @@ namespace GVC.Shifts.Repos
                     shiftParameters.Add(new GVC.Rota.Models.Shifts()
                     {
                         ShiftsId = 0,
-                        ShiftType = shiftType,
                         PersonnelId = dataTable.Rows[i][j].ToString(),
                         ShopId = dataTable.Rows[i][j+1].ToString(),
                         ShiftName = dataTable.Rows[i][j+2].ToString(),
@@ -235,26 +234,27 @@ namespace GVC.Shifts.Repos
                         IsShared = Boolean.Parse(dataTable.Rows[i][j + 6].ToString()),
                         IsPublished = Boolean.Parse(dataTable.Rows[i][j + 7].ToString()),
                         Theme = int.Parse(dataTable.Rows[i][j + 8].ToString()),
-                        Shift = new List<Activity>(){ new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+9].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+10].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+11].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+12].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+13].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+14].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+15].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+16].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+17].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+18].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+19].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+20].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+21].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+22].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+23].ToString())},
-                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+24].ToString()),
-                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+25].ToString()),
-                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+26].ToString()),
-                                                                        activityName = dataTable.Rows[i][j+27].ToString(),
-                                                                        theme = int.Parse(dataTable.Rows[i][j+28].ToString())},
+                        ShiftCount = int.Parse(dataTable.Rows[i][j + 9].ToString()),
+                        Shift = new List<Activity>(){ new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+10].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+11].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+12].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+13].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+14].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+15].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+16].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+17].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+18].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+19].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+20].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+21].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+22].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+23].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+24].ToString())},
+                                                    new Activity() { isPaid = Boolean.Parse(dataTable.Rows[i][j+25].ToString()),
+                                                                        startDateTime = DateTime.Parse(dataTable.Rows[i][j+26].ToString()),
+                                                                        endDateTime = DateTime.Parse(dataTable.Rows[i][j+27].ToString()),
+                                                                        activityName = dataTable.Rows[i][j+28].ToString(),
+                                                                        theme = int.Parse(dataTable.Rows[i][j+29].ToString())},
                         }
                     });
                 }

@@ -25,7 +25,6 @@ namespace GVC.Rota.Models
         public int Theme { get; set; }
         public bool IsPublished { get; set; }
         public int ShiftCount { get; set; }
-        public string ShiftType { get; set; }
         [NotMapped]
         public List<Activity> Shift { get; set; }
 
