@@ -30,6 +30,191 @@ namespace GVC.Shifts.API.Controllers
             this.serviceScopeFactory = serviceScopeFactory;
         }
 
+        /// <summary>
+        /// Create Users Record in Users Table from CSV file
+        /// the CSV file should contain the following:
+        /// Id,GivenName,SurName,UserPrincipalName,Email,Locations,IsOwner
+        /// </summary>
+        /// <param name="Users_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("Users")]
+        public IActionResult CreateUsersRecord(string Users_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(Users_FilePath);
+                var count = _shiftsRepo.InsertIntoUser(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create Leaves Record in Leaves Table from CSV file
+        /// the CSV file should contain the following:
+        /// LeaveType,FromDate,ToDate,NoOfHours,NoOfDays
+        /// </summary>
+        /// <param name="Leaves_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("Leaves")]
+        public IActionResult CreateLeavesRecord(string Leaves_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(Leaves_FilePath);
+                var count = _shiftsRepo.InsertIntoLeave(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create Holiday Record in Holiday Table from CSV file
+        /// the CSV file should contain the following:
+        /// HolidayDate,HolidayType
+        /// </summary>
+        /// <param name="Holiday_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("Holiday")]
+        public IActionResult CreateHolidayRecord(string Holiday_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(Holiday_FilePath);
+                var count = _shiftsRepo.InsertIntoHoliday(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create StoreShifts Record in StoreShifts Table from CSV file
+        /// the CSV file should contain the following:
+        /// Shop Name,ShiftType,ShiftStartTime,ShiftEndTime,IsActive,WorkingHours
+        /// </summary>
+        /// <param name="StoreShifts_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("StoreShifts")]
+        public IActionResult CreateStoreShiftsRecord(string StoreShifts_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(StoreShifts_FilePath);
+                var count = _shiftsRepo.InsertIntoStoreShift(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create Scheduler Record in Scheduler Table from CSV file.
+        ///  the CSV file should contain the following:
+        /// ShopName, IsActive, MailNickName
+        /// </summary>
+        /// <param name="SchedulerFilePath"></param>
+        /// <returns></returns>
+        [HttpPost("Scheduler")]
+        public IActionResult CreateSchedulerRecord(string SchedulerFilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(SchedulerFilePath);
+                var count = _shiftsRepo.InsertIntoScheduler(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create ScheduleGroupPersonnel Record in ScheduleGroupPersonnel Table from CSV file.
+        ///  the CSV file should contain the following:
+        /// UserId,ShopName
+        /// </summary>
+        /// <param name="SchedulerGroupPersonnel_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("SchedulerGroupPersonnel")]
+        public IActionResult CreateSchedulerGroupPersonnelRecord(string SchedulerGroupPersonnel_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(SchedulerGroupPersonnel_FilePath);
+                var count = _shiftsRepo.InsertIntoScheduleGroupPersonnel(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create Contract Record in Contract Table from CSV file
+        /// the CSV file should contain the following:
+        /// UserId,WorkingHours,WorkingDays
+        /// </summary>
+        /// <param name="Contract_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("Contracts")]
+        public IActionResult CreateContractRecord(string Contract_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(Contract_FilePath);
+                var count = _shiftsRepo.InsertIntoContract(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Create ContractDetails Record in ContractDetails Table from CSV file
+        /// the CSV file should contain the following:
+        /// UserId,WeekDay,IsWorking,StartTime,EndTime,ELPW
+        /// </summary>
+        /// <param name="ContractDetails_FilePath"></param>
+        /// <returns></returns>
+        [HttpPost("ContractDetails")]
+        public IActionResult CreateContractDetailsRecord(string ContractDetails_FilePath)
+        {
+            try
+            {
+                var csvResult = _shiftsRepo.GetDatatableFromCSV(ContractDetails_FilePath);
+                var count = _shiftsRepo.InsertIntoContractDetails(csvResult, serviceScopeFactory);
+                return Ok(count.Result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
 
         /// <summary>
         /// Create Channel Record in Channels Table  from CSV file.
@@ -78,29 +263,6 @@ namespace GVC.Shifts.API.Controllers
         }
 
         /// <summary>
-        /// Create Scheduler Record in Scheduler Table from CSV file.
-        ///  the CSV file should contain the following:
-        /// ShopName, IsActive, IsPublished, MailNickName
-        /// </summary>
-        /// <param name="SchedulerFilePath"></param>
-        /// <returns></returns>
-        [HttpPost("Scheduler")]
-        public IActionResult CreateSchedulerRecord(string SchedulerFilePath)
-        {
-            try
-            {
-                var csvResult = _shiftsRepo.GetDatatableFromCSV(SchedulerFilePath);
-                var count = _shiftsRepo.InsertIntoScheduler(csvResult, serviceScopeFactory);
-                return Ok(count.Result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-        /// <summary>
         /// Create Shifts Record in Shifts Table from CSV file
         ///  the CSV file should contain the following:
         ///PersonnelId,ShopId,
@@ -129,73 +291,8 @@ namespace GVC.Shifts.API.Controllers
 
         }
 
-        /// <summary>
-        /// Create Users Record in Users Table from CSV file
-        /// the CSV file should contain the following:
-        /// Id,GivenName,SurName,UserPrincipalName,Email
-        /// </summary>
-        /// <param name="Users_FilePath"></param>
-        /// <returns></returns>
-        [HttpPost("Users")]
-        public IActionResult CreateUsersRecord(string Users_FilePath)
-        {
-            try
-            {
-                var csvResult = _shiftsRepo.GetDatatableFromCSV(Users_FilePath);
-                var count = _shiftsRepo.InsertIntoUser(csvResult, serviceScopeFactory);
-                return Ok(count.Result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        
 
-        }
-
-        /// <summary>
-        /// Create Contract Record in Contract Table from CSV file
-        /// the CSV file should contain the following:
-        /// UserId,WorkingHours
-        /// </summary>
-        /// <param name="Contract_FilePath"></param>
-        /// <returns></returns>
-        [HttpPost("Contracts")]
-        public IActionResult CreateContractRecord(string Contract_FilePath)
-        {
-            try
-            {
-                var csvResult = _shiftsRepo.GetDatatableFromCSV(Contract_FilePath);
-                var count = _shiftsRepo.InsertIntoContract(csvResult, serviceScopeFactory);
-                return Ok(count.Result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-        /// <summary>
-        /// Create Leaves Record in Leaves Table from CSV file
-        /// the CSV file should contain the following:
-        /// LeaveType,FromDate,ToDate,NoOfHours,NoOfDays
-        /// </summary>
-        /// <param name="Leaves_FilePath"></param>
-        /// <returns></returns>
-        [HttpPost("Leaves")]
-        public IActionResult CreateLeavesRecord(string Leaves_FilePath)
-        {
-            try
-            {
-                var csvResult = _shiftsRepo.GetDatatableFromCSV(Leaves_FilePath);
-                var count = _shiftsRepo.InsertIntoLeave(csvResult, serviceScopeFactory);
-                return Ok(count.Result);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
+        
     }
 }

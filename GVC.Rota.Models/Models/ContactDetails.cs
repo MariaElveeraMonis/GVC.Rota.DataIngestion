@@ -6,18 +6,22 @@ using System.Text;
 
 namespace GVC.Rota.Models.Models
 {
-    public class Contracts
+    public class ContactDetails
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ContractsId
+        public int CDId
         {
             get; set;
         }
+        [NotMapped]
         public string UserId { get; set; }
-        public int WorkingHours { get; set; }
-        public int WorkingDays { get; set; }
         [NotMapped]
         public string UserName { get; set; }
+        public int ContractId { get; set; }
+        public string WeekDay { get; set; }
+        public int Working { get; set; }
+        public TimeSpan TradingStartTimes { get; set; }
+        public TimeSpan TradingEndTimes { get; set; }
+        public int ELPW { get; set; }
     }
 }

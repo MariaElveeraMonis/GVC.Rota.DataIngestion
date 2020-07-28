@@ -16,6 +16,7 @@ namespace GVC.Rota.Models.Models
         public string Surname { get; set; }
         public string UserPrincipalName { get; set; }
         public string Email { get; set; }
+        public Members Member { get; set; }
 
     }
 }
