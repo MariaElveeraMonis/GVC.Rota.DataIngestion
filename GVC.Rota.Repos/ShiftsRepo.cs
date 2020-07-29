@@ -77,9 +77,9 @@ namespace GVC.Shifts.Repos
                         Email = dataTable.Rows[i][j + 4].ToString(),
                         Member = new Members()
                         {
-                            UserId = dataTable.Rows[i][j + 5].ToString(),
-                            Locations = dataTable.Rows[i][j + 6].ToString(),
-                            IsOwner = Boolean.Parse(dataTable.Rows[i][j + 7].ToString())
+                            UserId = dataTable.Rows[i][j].ToString(),
+                            Locations = dataTable.Rows[i][j + 5].ToString(),
+                            IsOwner = Boolean.Parse(dataTable.Rows[i][j + 6].ToString())
                         }
                     });
                 }
@@ -92,7 +92,6 @@ namespace GVC.Shifts.Repos
                         var result = await dbContext.AddAsync(user);
                         if (result.State == EntityState.Added)
                         {
-
                             InsertIntoMembers(user.Member, serviceScopeFactory);
                         }
                         await dbContext.SaveChangesAsync();
@@ -264,7 +263,7 @@ namespace GVC.Shifts.Repos
                     schedulerParameters.Add(new Scheduler()
                     {
                         SchedulerId = 0,
-                        ShopName = dataTable.Rows[i][j + 0].ToString(),
+                        ShopName = dataTable.Rows[i][j].ToString(),
                         IsActive = Boolean.Parse(dataTable.Rows[i][j + 1].ToString()),
                         MailNickName = dataTable.Rows[i][j + 2].ToString()
 
@@ -413,7 +412,7 @@ namespace GVC.Shifts.Repos
                         Working = int.Parse(dataTable.Rows[i][j + 2].ToString()),
                         TradingStartTimes = (DateTime.Parse(dataTable.Rows[i][j + 3].ToString())).TimeOfDay,
                         TradingEndTimes = (DateTime.Parse(dataTable.Rows[i][j + 4].ToString())).TimeOfDay,
-                        ELPW = int.Parse(dataTable.Rows[i][j + 2].ToString())
+                        ELPW = int.Parse(dataTable.Rows[i][j + 5].ToString())
                     });
                 }
 
